@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 150px;
+    padding: 0 0 0 10px;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 3px;
+    border-radius: 3px;
+}
+
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 30px;
+    width: 100px;
+    padding: 2px 5px;
+    border: 1px black solid;
+    border-radius: 3px;
+    transition: .5s background;
+}
+
+button:hover {
+    background-color: rgb(131, 178, 194);
+}
+
+select:hover, select:active, select:focus {
+    appearance: none;
+}
+
+#configurationWrapper {
+    height: 50px;
+    background-color: rgb(97 132 144);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+}
+
+#title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20pt;
+    color: white;
+}
+
+#config {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+#config div {
+    margin: 0 5px 0 5px;
+}
+
+#algorythmShowContainer {
+    padding: 20px;
+    height: calc(100vh - 90px);
+    background-color: rgb(70 88 95);
+    display: flex;
+    align-items: flex-end;
+}
+
+.barElement {
+    background: rgb(174, 255, 232);
+    width: 5px;
+    margin: 0 1px 0 1px;
+}
+
+.barValue {
+    display: none;
+}
+
+.currentHighlight {
+    background-color: rgb(221, 6, 6);
+}
