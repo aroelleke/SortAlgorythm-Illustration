@@ -15,13 +15,12 @@ function checkIfAlreadyWorking() {
 async function bubbleSort(array) {
     if (!!checkIfAlreadyWorking()) return
     for (let index = 0; index < array.length; index++) {
+        console.log(array)
         for (let index2 = 0; index2 < array.length - index - 1; index2++) {
             changeView.highlightCurrentElement(index2)
             changeView.highlightCurrentElement(index2 + 1)
             if (array[index2] > array[index2 + 1]) {
-                let tmp = array[index2]
-                array[index2] = array[index2 + 1]
-                array[index2 + 1] = tmp
+                array = swap(array, index2, index2 + 1)
                 changeView.swapElements(index2, index2 + 1)
             }
             await delay(10)
@@ -47,9 +46,7 @@ async function selectSort(array) {
             await delay(10)
             changeView.dehighlightCurrentElement(index2)
         }
-        var temp = array[index]
-        array[index] = array[min]
-        array[min] = temp
+        array = swap(array, index, min)
         changeView.swapElements(index, min)
         await delay(0)
         changeView.dehighlightCurrentElement(index)
@@ -99,9 +96,7 @@ async function cocktailSort(array) {
         for (var index = start; index < end; index++) {
             changeView.highlightCurrentElement(index)
             if (array[index] > array[index + 1]) {
-                var temp = array[index]
-                array[index] = array[index + 1]
-                array[index + 1] = temp
+                array = swap(array, index, index + 1)
                 changeView.swapElements(index, index + 1)
                 swapped = true
             }
@@ -114,9 +109,7 @@ async function cocktailSort(array) {
         for (var index = end - 1; index >= start; index--) {
             changeView.highlightCurrentElement(index)
             if (array[index] < array[index - 1]) {
-                var temp = array[index]
-                array[index] = array[index - 1]
-                array[index - 1] = temp
+                array = swap(array, index, index - 1)
                 changeView.swapElements(index, index - 1)
                 swapped = true
             }
@@ -136,9 +129,7 @@ async function gnomeSort(array) {
         changeView.highlightCurrentElement(index)
         var swapped = false
         if (array[index] > array[index + 1]) {
-            var temp = array[index]
-            array[index] = array[index + 1]
-            array[index + 1] = temp
+            array = swap(array, index, index + 1)
             changeView.swapElements(index, index + 1)
             swapped = true
         }
@@ -153,4 +144,58 @@ async function gnomeSort(array) {
     return array
 }
 
-export default { bubbleSort, selectSort, countSort, cocktailSort, gnomeSort }
+var array_length
+async function heapSort(array) {
+    if (!!checkIfAlreadyWorking()) return
+    array_length = array.length
+    for (let index = Math.floor(array_length / 2); index >= 0; index--) {
+        changeView.highlightCurrentElement(index)
+        array = await heap_root(array, index)
+        await delay(10)
+        changeView.dehighlightCurrentElement(index)
+    }
+    for (let index = array.length - 1; index > 0; index--) {
+        changeView.highlightCurrentElement(index)
+        swap(array, 0, index)
+        changeView.swapElements(0, index)
+        array_length--
+        await delay(10)
+        changeView.dehighlightCurrentElement(index)
+        array = await heap_root(array, 0)
+    }
+    changeView.enableConfig()
+    working = false
+    return array
+}
+
+async function heap_root(array, index) {
+    var left = 2 * index + 1
+    var right = 2 * index + 2
+    var max = index
+    if (left < array_length && array[left] > array[max]) {
+        max = left
+    }
+    if (right < array_length && array[right] > array[max]) {
+        max = right
+    }
+    if (max != index) {
+        changeView.highlightCurrentElement(index)
+        changeView.highlightCurrentElement(max)
+        swap(array, index, max)
+        changeView.swapElements(index, max)
+        await delay(10)
+        changeView.dehighlightCurrentElement(index)
+        changeView.dehighlightCurrentElement(max)
+        array = await heap_root(array, max)
+    }
+    return array
+}
+
+function swap(array, index1, index2) {
+    var temp = array[index1]
+    array[index1] = array[index2]
+    array[index2] = temp
+    return array
+}
+
+export default { bubbleSort, selectSort, countSort, cocktailSort, gnomeSort, heapSort }
