@@ -85,3 +85,9 @@ select:hover, select:active, select:focus {
 .currentHighlight {
     background-color: rgb(221, 6, 6);
 }
+
+@media only screen and (max-width: 600px) {
+    #title {
+        font-size: 16pt;
+    }
+}
