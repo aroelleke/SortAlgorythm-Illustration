@@ -214,7 +214,62 @@ async function insertionSort(array) {
     changeView.enableConfig()
     working = false
     return array;
-
 }
 
-export default { bubbleSort, selectSort, countSort, cocktailSort, gnomeSort, heapSort, insertionSort }
+async function quickSort(array) {
+    if (!!checkIfAlreadyWorking()) return
+    array = await quickSortRekursive(array, 0, array.length - 1)
+    console.log(array)
+    changeView.enableConfig()
+    working = false
+    return array;
+}
+
+async function quickSortRekursive(array, left, right) {
+    var index
+    if (array.length > 1) {
+        index = await partition(array, left, right)
+        if (left < index - 1) {
+            array = await quickSortRekursive(array, left, index - 1)
+        }
+        if (index < right) {
+            array = await quickSortRekursive(array, index, right)
+        }
+    }
+    return array
+}
+
+async function partition(array, left, right) {
+    var pivot = array[Math.floor((right + left) / 2)]
+    var index = left
+    var index2 = right
+    while (index <= index2) {
+        changeView.highlightCurrentElement(index)
+        while (array[index] < pivot) {
+            await delay(50)
+            changeView.dehighlightCurrentElement(index)
+            index++
+            changeView.highlightCurrentElement(index)
+        }
+        await delay(50)
+        changeView.dehighlightCurrentElement(index)
+        changeView.highlightCurrentElement(index2)
+        while (array[index2] > pivot) {
+            await delay(50)
+            changeView.dehighlightCurrentElement(index2)
+            index2--
+            changeView.highlightCurrentElement(index2)
+        }
+        await delay(50)
+        changeView.dehighlightCurrentElement(index2)
+        if (index <= index2) {
+            swap(array, index, index2)
+            index++
+            index2--
+        }
+        await delay(20)
+    }
+    return index
+}
+
+export default { bubbleSort, selectSort, countSort, cocktailSort, gnomeSort, heapSort, insertionSort, quickSort }
