@@ -21,7 +21,6 @@ function swapElements(index1, index2) {
 }
 
 function setElement(index, value) {
-    console.log("index:\t", index, "value:\t", value)
     var element = document.getElementById(`bar_${index}`)
     element.style.height = `calc(${value} / ${config.randomMax} * (100% - 40px))`
     element.childNodes[1].innerHTML = value
