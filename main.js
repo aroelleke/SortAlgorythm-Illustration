@@ -5,17 +5,21 @@ import algorythms from "./js/algorythms.js";
 
 
 var baseArray = []
-
+var barAmount = 0
 initialize()
 
 function initialize() {
+    document.getElementById("configAlgorythm").addEventListener("input", () => {
+        baseArray = generateArray(barAmount)
+        setBarElements(baseArray)
+    })
     var algorythmContainer = document.getElementById("algorythmShowContainer")
     var algorythmContainerWidth = window.getComputedStyle(algorythmContainer).getPropertyValue("width")
     algorythmContainerWidth = algorythmContainerWidth.slice(0, algorythmContainerWidth.length - 2)
-    var barAmount = Math.round(algorythmContainerWidth / 7)
+    barAmount = Math.round(algorythmContainerWidth / 7)
+    // barAmount = 10
 
     baseArray = generateArray(barAmount)
-    console.log(baseArray)
     setBarElements(baseArray)
 
     document.getElementById("action_start").addEventListener("click", startAlgorythm)
@@ -35,7 +39,7 @@ function setBarElements(array) {
     document.getElementById("algorythmShowContainer").innerHTML = innerHTML
 }
 
-async function startAlgorythm() {
+function startAlgorythm() {
     const algorythm = document.getElementById("configAlgorythm").value
     algorythms[algorythm](baseArray)
 }

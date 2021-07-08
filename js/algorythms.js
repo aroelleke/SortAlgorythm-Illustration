@@ -4,7 +4,16 @@ import changeView from "./changeView.js"
 
 
 
-async function bubblesort(array) {
+var working = false
+
+function checkIfAlreadyWorking() {
+    if (!!working) return true
+    changeView.disalbeConfig()
+    working = true
+}
+
+async function bubbleSort(array) {
+    if (!!checkIfAlreadyWorking()) return
     for (let index = 0; index < array.length; index++) {
         for (let index2 = 0; index2 < array.length - index - 1; index2++) {
             changeView.highlightCurrentElement(index2)
@@ -20,10 +29,13 @@ async function bubblesort(array) {
             changeView.dehighlightCurrentElement(index2 + 1)
         }
     }
+    changeView.enableConfig()
+    working = false
     return array
 }
 
-async function selectsort(array) {
+async function selectSort(array) {
+    if (!!checkIfAlreadyWorking()) return
     for (var index = 0; index < array.length; index++) {
         changeView.highlightCurrentElement(index)
         var min = index
@@ -42,10 +54,13 @@ async function selectsort(array) {
         await delay(0)
         changeView.dehighlightCurrentElement(index)
     }
+    changeView.enableConfig()
+    working = false
     return array
 }
 
-async function countsort(array) {
+async function countSort(array) {
+    if (!!checkIfAlreadyWorking()) return
     let index = config.randomMin
     var index2 = 0
     var count = []
@@ -69,7 +84,73 @@ async function countsort(array) {
             count[index]--
         }
     }
+    changeView.enableConfig()
+    working = false
     return array
 }
 
-export default { bubblesort, selectsort, countsort }
+async function cocktailSort(array) {
+    if (!!checkIfAlreadyWorking()) return
+    var start = 0
+    var end = array.length
+    var swapped = true
+    while (!!swapped) {
+        swapped = false
+        for (var index = start; index < end; index++) {
+            changeView.highlightCurrentElement(index)
+            if (array[index] > array[index + 1]) {
+                var temp = array[index]
+                array[index] = array[index + 1]
+                array[index + 1] = temp
+                changeView.swapElements(index, index + 1)
+                swapped = true
+            }
+            await delay(0)
+            changeView.dehighlightCurrentElement(index)
+        }
+        if (!swapped) { break }
+        swapped = false
+        end--
+        for (var index = end - 1; index >= start; index--) {
+            changeView.highlightCurrentElement(index)
+            if (array[index] < array[index - 1]) {
+                var temp = array[index]
+                array[index] = array[index - 1]
+                array[index - 1] = temp
+                changeView.swapElements(index, index - 1)
+                swapped = true
+            }
+            await delay(0)
+            changeView.dehighlightCurrentElement(index)
+        }
+        start++
+    }
+    changeView.enableConfig()
+    working = false
+    return array
+}
+
+async function gnomeSort(array) {
+    if (!!checkIfAlreadyWorking()) return
+    for (var index = 0; index < array.length; index++) {
+        changeView.highlightCurrentElement(index)
+        var swapped = false
+        if (array[index] > array[index + 1]) {
+            var temp = array[index]
+            array[index] = array[index + 1]
+            array[index + 1] = temp
+            changeView.swapElements(index, index + 1)
+            swapped = true
+        }
+        await delay(0)
+        changeView.dehighlightCurrentElement(index)
+        if (swapped) {
+            if (index > 0) index -= 2
+        }
+    }
+    changeView.enableConfig()
+    working = false
+    return array
+}
+
+export default { bubbleSort, selectSort, countSort, cocktailSort, gnomeSort }

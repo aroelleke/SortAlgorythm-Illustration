@@ -30,7 +30,7 @@ button {
     transition: .5s background;
 }
 
-button:hover {
+button:hover:enabled {
     background-color: rgb(131, 178, 194);
 }
 
