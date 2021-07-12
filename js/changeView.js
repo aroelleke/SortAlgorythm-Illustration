@@ -27,13 +27,15 @@ function setElement(index, value) {
 }
 
 function disalbeConfig() {
-    document.getElementById("action_start").disabled = true
+    document.getElementById("actionStart").disabled = true
     document.getElementById("configAlgorythm").disabled = true
+    document.getElementById("actionReset").disabled = true
 }
 
 function enableConfig() {
-    document.getElementById("action_start").disabled = false
+    document.getElementById("actionStart").disabled = false
     document.getElementById("configAlgorythm").disabled = false
+    document.getElementById("actionReset").disabled = false
 }
 
 export default { highlightCurrentElement, dehighlightCurrentElement, swapElements, setElement, disalbeConfig, enableConfig }
